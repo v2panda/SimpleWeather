@@ -10,10 +10,9 @@
 #import "JHOpenidSupplier.h"
 #import "JHAPISDK.h"
 #import "MainHeader.h"
-#import <iAd/iAd.h>
-@interface SecondViewController ()<ADBannerViewDelegate>
 
-@property(weak,nonatomic)ADBannerView *bannerView;
+@interface SecondViewController ()
+
 
 @end
 
@@ -31,39 +30,10 @@
     //NSLog(@"weDic:%@",self.weDic);
     [self initUIs];
     
-    [self initAD];
+  
     
 }
--(void)initAD
-{
-    ADBannerView *bannerView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 44, kDeviceWidth, 50)];
-    bannerView.delegate = self;
-    bannerView.alpha = .0f;
-    [self.view addSubview:bannerView];
-    self.bannerView = bannerView;
-    //[self.bannerView setBackgroundColor:[UIColor clearColor]];
-}
-#pragma mark - ADBannerViewDelegate
 
-//广告即将被加载时调用。所以，这个方法调用的时候广告还没加载进来
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner{
-    [UIView animateWithDuration:10.5f animations:^{
-        self.bannerView.alpha = 1.f;
-    }];
-}
-//方法在广告加载之后调用
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave{
-    NSLog(@"开始调用广告%s", __PRETTY_FUNCTION__);
-    return YES;
-}
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
-    NSLog(@"结束调用广告%s", __PRETTY_FUNCTION__);
-    
-    [UIView animateWithDuration:0.5f animations:^{
-        self.bannerView.alpha = .0f;
-        NSLog(@"结束调用了");
-    }];
-}
 
 -(void)initButtons
 {
