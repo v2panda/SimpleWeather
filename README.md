@@ -24,7 +24,4 @@ Weibo:[panda](http://weibo.com/xzlovepanda/home?topnav=1&wvr=6)
 
 如果您觉得这个开源项目还不错的话，欢迎加颗星星或者 follow 我一下以示支持，这将对我和我的项目的发展提供不可估量的帮助。再次感谢。
 
-###捐赠
-支付宝：
 
-![donate](https://raw.githubusercontent.com/xuzhen2014/edocs/master/images-folder/alipay-panda.png)
