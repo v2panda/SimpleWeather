@@ -1,6 +1,6 @@
 #SimpleWeather
 ##至简天气
----
+----
 ###关于
 SimpleWeather for iOS
 
