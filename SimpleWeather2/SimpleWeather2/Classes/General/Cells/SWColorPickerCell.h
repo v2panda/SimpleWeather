@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWSettingViewController.h"
 
 @interface SWColorPickerCell : UITableViewCell
 
 - (void)prepareForDeletion;
+
+@property (nonatomic, weak) SWSettingViewController *settingVC;
 
 @end

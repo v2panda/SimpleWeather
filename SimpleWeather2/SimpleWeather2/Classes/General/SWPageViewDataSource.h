@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface SWPageViewDataSource : NSObject <UIPageViewControllerDataSource>
+
 - (UIViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(UIViewController *)viewController;
+
 @end

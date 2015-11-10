@@ -16,5 +16,7 @@
 #import "Constants.h"
 
 #import <AFNetworking/AFNetworking.h>
+#import "UITableViewController+SWChangeColor.h"
+#import "UIView+SWChangeColor.h"
 
 #endif /* SW_pch */

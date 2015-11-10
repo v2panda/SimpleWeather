@@ -18,6 +18,9 @@
 		28716C121BF07994007BFB4F /* SWColorPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28716C101BF07994007BFB4F /* SWColorPickerCell.m */; };
 		28716C131BF07994007BFB4F /* SWColorPickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28716C111BF07994007BFB4F /* SWColorPickerCell.xib */; };
 		2882C8301BEC507A00CCABB0 /* WeatherLazy framed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2882C82F1BEC507A00CCABB0 /* WeatherLazy framed.png */; };
+		288E01FA1BF1CF53002E9669 /* SWSetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 288E01F91BF1CF53002E9669 /* SWSetHelper.m */; };
+		288E01FD1BF1EDCB002E9669 /* UITableViewController+SWChangeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 288E01FC1BF1EDCB002E9669 /* UITableViewController+SWChangeColor.m */; };
+		288E02001BF1F505002E9669 /* UIView+SWChangeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 288E01FF1BF1F505002E9669 /* UIView+SWChangeColor.m */; };
 		28B286F51BEB2C7700B75B9C /* SWRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B286F41BEB2C7700B75B9C /* SWRootViewController.m */; };
 		28B286F81BEB335900B75B9C /* SWPageViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B286F71BEB335900B75B9C /* SWPageViewDataSource.m */; };
 		28B286FB1BEB3CF600B75B9C /* SWHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B286FA1BEB3CF600B75B9C /* SWHomeViewController.m */; };
@@ -48,6 +51,12 @@
 		28716C101BF07994007BFB4F /* SWColorPickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWColorPickerCell.m; sourceTree = "<group>"; };
 		28716C111BF07994007BFB4F /* SWColorPickerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SWColorPickerCell.xib; sourceTree = "<group>"; };
 		2882C82F1BEC507A00CCABB0 /* WeatherLazy framed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeatherLazy framed.png"; sourceTree = "<group>"; };
+		288E01F81BF1CF53002E9669 /* SWSetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSetHelper.h; sourceTree = "<group>"; };
+		288E01F91BF1CF53002E9669 /* SWSetHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSetHelper.m; sourceTree = "<group>"; };
+		288E01FB1BF1EDCB002E9669 /* UITableViewController+SWChangeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewController+SWChangeColor.h"; sourceTree = "<group>"; };
+		288E01FC1BF1EDCB002E9669 /* UITableViewController+SWChangeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewController+SWChangeColor.m"; sourceTree = "<group>"; };
+		288E01FE1BF1F505002E9669 /* UIView+SWChangeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SWChangeColor.h"; sourceTree = "<group>"; };
+		288E01FF1BF1F505002E9669 /* UIView+SWChangeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SWChangeColor.m"; sourceTree = "<group>"; };
 		28B286F31BEB2C7700B75B9C /* SWRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRootViewController.h; sourceTree = "<group>"; };
 		28B286F41BEB2C7700B75B9C /* SWRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRootViewController.m; sourceTree = "<group>"; };
 		28B286F61BEB335900B75B9C /* SWPageViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWPageViewDataSource.h; sourceTree = "<group>"; };
@@ -151,6 +160,10 @@
 				28716BFB1BF06551007BFB4F /* Cells */,
 				2842D8FF1BE1F94F00291200 /* NSString+Date.h */,
 				2842D9001BE1F94F00291200 /* NSString+Date.m */,
+				288E01FB1BF1EDCB002E9669 /* UITableViewController+SWChangeColor.h */,
+				288E01FC1BF1EDCB002E9669 /* UITableViewController+SWChangeColor.m */,
+				288E01FE1BF1F505002E9669 /* UIView+SWChangeColor.h */,
+				288E01FF1BF1F505002E9669 /* UIView+SWChangeColor.m */,
 				28B286F61BEB335900B75B9C /* SWPageViewDataSource.h */,
 				28B286F71BEB335900B75B9C /* SWPageViewDataSource.m */,
 			);
@@ -162,6 +175,8 @@
 			children = (
 				2842D8FB1BE1F13200291200 /* SWNetHelper.h */,
 				2842D8FC1BE1F13200291200 /* SWNetHelper.m */,
+				288E01F81BF1CF53002E9669 /* SWSetHelper.h */,
+				288E01F91BF1CF53002E9669 /* SWSetHelper.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -236,7 +251,7 @@
 				2842D8CB1BE1E6A700291200 /* Frameworks */,
 				2842D8CC1BE1E6A700291200 /* Resources */,
 				20909979DBAC3405A99F52B4 /* Copy Pods Resources */,
-				FB1DC63FBF3AD3B2E8C8C55E /* Embed Pods Frameworks */,
+				3EEFA37148EF042DA46C789A /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -311,6 +326,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		3EEFA37148EF042DA46C789A /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		ECB6B1464A523815FAF54C16 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -326,21 +356,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		FB1DC63FBF3AD3B2E8C8C55E /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -351,13 +366,16 @@
 				2842D9011BE1F94F00291200 /* NSString+Date.m in Sources */,
 				28B286F51BEB2C7700B75B9C /* SWRootViewController.m in Sources */,
 				28B286FB1BEB3CF600B75B9C /* SWHomeViewController.m in Sources */,
+				288E02001BF1F505002E9669 /* UIView+SWChangeColor.m in Sources */,
 				28B286FE1BEB3D0C00B75B9C /* SWSettingViewController.m in Sources */,
 				28B286F81BEB335900B75B9C /* SWPageViewDataSource.m in Sources */,
 				28716C121BF07994007BFB4F /* SWColorPickerCell.m in Sources */,
 				2842D8FD1BE1F13200291200 /* SWNetHelper.m in Sources */,
+				288E01FD1BF1EDCB002E9669 /* UITableViewController+SWChangeColor.m in Sources */,
 				28716C061BF06AB1007BFB4F /* SWColorCell.m in Sources */,
 				2842D8D31BE1E6A700291200 /* main.m in Sources */,
 				2842D8FA1BE1F0A900291200 /* AppDelegate.m in Sources */,
+				288E01FA1BF1CF53002E9669 /* SWSetHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

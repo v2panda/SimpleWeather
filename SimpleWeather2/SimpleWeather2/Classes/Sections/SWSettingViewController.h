@@ -10,6 +10,8 @@
 
 @interface SWSettingViewController : UITableViewController
 
+//- (void)changeColor;
+
 @property (nonatomic, strong) NSMutableArray *cellsArray;
 
 @end

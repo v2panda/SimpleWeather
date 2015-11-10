@@ -9,6 +9,7 @@
 #import "SWSettingViewController.h"
 #import "SWColorCell.h"
 #import "SWColorPickerCell.h"
+#import "SWSetHelper.h"
 
 @interface SWSettingViewController ()
 
@@ -44,8 +45,14 @@
     
     cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
-    if ([identifier isEqualToString:@"colorPickerCell"]) {
-        NSLog(@"colorPickerCell");
+    if ([identifier isEqualToString:@"colorCell"]) {
+        NSLog(@"colorCell");
+        UILabel *detailLabel = (UILabel *)[cell.contentView viewWithTag:1];
+        [detailLabel setText:[[SWSetHelper sharedCondition] colorString]];
+        NSLog(@"SWSetHelper - %@,%@",[[SWSetHelper sharedCondition] colorString],detailLabel.text);
+    }else if ([identifier isEqualToString:@"colorPickerCell"]){
+        SWColorPickerCell *colorPickerCell = (SWColorPickerCell *)cell;
+        colorPickerCell.settingVC = self;
     }
     
     return cell;
@@ -61,17 +68,22 @@
     return @"这是TableView的Footer。";
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.cellsArray[indexPath.row]isEqualToString:@"colorPickerCell"]) {
+        return 120;
+    }
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
     
     if ( row < self.cellsArray.count) {
-        NSLog(@"改变颜色");
          NSString* identifier = self.cellsArray[row];
         if ([identifier isEqual:@"colorCell"]) {
-             NSLog(@"self.isEditingColor1 : %d",self.isEditingColor);
             self.isEditingColor = !self.isEditingColor;
-            NSLog(@"self.isEditingColor2 : %d",self.isEditingColor);
         } else {
             NSLog(@"else change color");
         }
@@ -93,6 +105,26 @@
     
 }
 
+//- (void)changeColor
+//{
+//     NSInteger themeColor = [UserDefaults integerForKey:@"ThemeColor"];
+//    switch (themeColor) {
+//        case 0:
+//            self.tableView.backgroundColor = DefaultColor;
+//            break;
+//        case 1:
+//            self.tableView.backgroundColor = DefaultRed;
+//            break;
+//        case 2:
+//            self.tableView.backgroundColor = DefaultGray;
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//}
+
+
 #pragma mark - Setter & Getter
 
 - (void)setIsEditingColor:(BOOL)isEditingColor
@@ -113,8 +145,8 @@
         [self.cellsArray removeObject:@"colorPickerCell"];
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
-//        SWColorPickerCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-//        [cell prepareForDeletion];
+        SWColorPickerCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        [cell prepareForDeletion];
         
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         
@@ -134,6 +166,8 @@
     }
     return _cellsArray;
 }
+
+
 
 /*
 // Override to support conditional editing of the table view.
