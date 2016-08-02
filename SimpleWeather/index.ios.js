@@ -3,9 +3,9 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
-import React, { Component } from 'react';
-import { AppRegistry,StyleSheet,Navigator} from 'react-native';
+'use strict'
+import React, { Component } from 'react'
+import { AppRegistry,StyleSheet,Navigator} from 'react-native'
 import HomePage from './jscore/HomePage'
 
 class SimpleWeather extends Component {
@@ -13,7 +13,7 @@ class SimpleWeather extends Component {
     super(props)
   }
 	
-  render() {
+  render () {
     return (
     	<Navigator style = {styles.container}
     		// 定义启动时加载的路由
@@ -21,19 +21,19 @@ class SimpleWeather extends Component {
     			component: HomePage
     		}}
     		// 用来渲染navigator栈顶的route里的component页面
-    		renderSence{(route,navigator)=>{
+    		renderScene={(route, navigator)=>{
     			// route={component: xxx, name: xxx, ...}， navigator.......route 用来在对应界面获取其他键值
     			// {...route.passProps}即就是把passProps里的键值对全部以给属性赋值的方式展开 如：test={10}
     			return <route.component navigator={navigator} {...route} {...route.passProps}/>
     		}}/>
-    );
+    )
   }
 }
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   }
-});
+})
 
 AppRegistry.registerComponent('SimpleWeather', () => SimpleWeather);

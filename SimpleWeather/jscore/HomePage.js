@@ -13,7 +13,7 @@ class HomePage extends Component {
     super(...args)
     this.state = ({
       isError: false,
-      isLoading: true,
+      isLoading: false,
       isPlaying: true,
       fadeAnimLogo: new Animated.Value(0), // 设置动画初始值，生成Value对象
       fadeAnimText0: new Animated.Value(0),
@@ -33,13 +33,40 @@ class HomePage extends Component {
 
 
   render () {
-
+  	let content
+  	if (this.state.isLoading) {
+  		content = (<View style={styles.loadingContent}/>)
+  	} else {
+  		content = (
+  		<View style={styles.content}>
+  			<Text style={styles.toVideo}>--> 去看视频～</Text>
+  		</View>)
+  	}
+  	return (
+  	<View style={styles.content} needsOffscreenAlphaCompositing renderToHardwareTextureAndroid >
+        {content}
+      </View>
+  	)
   }
 
 }
 
 var styles = StyleSheet.create({
-
+	loadingContent: {
+		backgroundColor:'black', 
+		flex: 1
+	},
+	content: {
+		backgroundColor: '#434243',
+    flex: 1
+	},
+	toVideo: {
+		fontSize: 14,
+    color: 'white',
+    position: 'absolute',
+    bottom: 8,
+    right: 15
+	}
 })
 
 module.exports = HomePage
