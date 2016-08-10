@@ -7,22 +7,19 @@
 'use strict'
 import React, { Component } from 'react'
 import { View, ScrollView,Alert, Animated, Image, TouchableHighlight, Text, StyleSheet } from 'react-native'
+import Setting from './Setting'
+
 
 class HomePage extends Component {
    constructor (...args) {
     super(...args)
     this.state = ({
-      isError: false,
-      isLoading: false,
-      isPlaying: true,
-      fadeAnimLogo: new Animated.Value(0), // 设置动画初始值，生成Value对象
-      fadeAnimText0: new Animated.Value(0),
-      fadeAnimText1: new Animated.Value(0),
-      fadeAnimLayout: new Animated.Value(1)
+
     })
   }
   // render方法之后执行
   async componentDidMount () {
+
   	// 网络请求
   	try {
 
@@ -34,57 +31,44 @@ class HomePage extends Component {
 
   render () {
   	let content
-  	if (this.state.isLoading) {
-  		content = (<View style={styles.loadingContent}/>)
-  	} else {
   		content = (
   		<View style={styles.content}>
         <View style={styles.topcontent}>
-          <TouchableHighlight style={styles.buttonStyle}
+          <TouchableHighlight style={styles.leftbutton}
             underlayColor={'#333333'}
-            onPress={() => Alert.alert(
-            'Alert Title',
-            'alertMessage',
-          )}>
-            <Text style={styles.toHistory}>查看</Text>
+            onPress={() => {
+              this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                component: Setting,
+                title: '233',
+              })
+            }}>
+            <Image source={require('./images/gank_launcher.png')} style={styles.btnimage}/>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.buttonStyle1}
+          <TouchableHighlight style={styles.rightbutton}
             underlayColor={'#333333'}
             onPress={() => Alert.alert(
             'Alert Title',
             'alertMessage',
           )}>
-            <Text style={styles.toHistory}>查看</Text>
-          </TouchableHighlight>
-          <TouchableHighlight style={styles.buttonStyle1}
-            underlayColor={'#333333'}
-            onPress={() => Alert.alert(
-            'Alert Title',
-            'alertMessage',
-          )}>
-            <Text style={styles.toHistory}>查看</Text>
-          </TouchableHighlight>
-          <TouchableHighlight style={styles.buttonStyle1}
-            underlayColor={'#333333'}
-            onPress={() => Alert.alert(
-            'Alert Title',
-            'alertMessage',
-          )}>
-            <Text style={styles.toHistory}>查看</Text>
+            <Image source={require('./images/gank_launcher.png')} style={styles.btnimage}/>
           </TouchableHighlight>
         </View>
+        <TouchableHighlight style={{flex: 1}}
+            underlayColor={'#333333'}
+            onPress={() => Alert.alert(
+            'Alert Title',
+            'alertMessage',
+          )}>
   			<ScrollView contentContainerStyle={styles.scrollView}
           automaticallyAdjustContentInsets={false}>
-          <Text style={styles.toVideo}>--> 去看视频～</Text>
-          <Text style={styles.toVideo1}>--> 去看视频～</Text>
-          <Text style={styles.toVideo2}>--> 去看视频～</Text>
-          <Text style={styles.toVideo3}>--> 去看视频～</Text>
-          <Text style={styles.toVideo3}>--> 去看视频～</Text>
-          <Text style={styles.toVideo3}>--> 去看视频～</Text>
-          <Text style={styles.toVideo3}>--> 去看视频～</Text>
+          <Text style={styles.city}>city</Text>
+          <Text style={styles.weather}>weather</Text>
+          <Text style={styles.temperature}>temperature</Text>
+          <Text style={styles.drying}>drying</Text>
+          <Text style={styles.wind}>wind</Text>
         </ScrollView>
+        </TouchableHighlight>
   		</View>)
-  	}
   	return (
   	<View style={styles.content} needsOffscreenAlphaCompositing renderToHardwareTextureAndroid >
         {content}
@@ -94,86 +78,68 @@ class HomePage extends Component {
 
 }
 
+
 var styles = StyleSheet.create({
-	loadingContent: {
-		backgroundColor:'black', 
-		flex: 1
-	},
 	content: {
 		backgroundColor: '#434243',
     flex: 1,
 	},
   topcontent: {
     backgroundColor: '#F0FFFF',
-    // flex: 1,
     marginTop: 50,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'row',
-    marginBottom: 10,
   },
   scrollView: {
     backgroundColor: '#4682B4',
-    // flex: 1,
+    flex: 1,
     // justifyContent: 'space-between',
     // justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10
   },
-  buttonStyle: {
-    backgroundColor: '#87CEEB',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // flex: 1,
-    height:30,
-    width:30,
-    // marginTop: 50,
-    // marginLeft: 10,
-    // marginBottom: 17
-  },
-  buttonStyle1: {
+  leftbutton: {
     backgroundColor: '#87CEEB',
     height:30,
     width:30,
-    // marginTop: 50,
-    marginLeft: 50,
-    // marginBottom: 17
+    marginLeft: 10,
   },
-  toHistory: {
-    fontSize: 10,
-    color: 'white'
+  rightbutton: {
+    backgroundColor: '#87CEEB',
+    height:30,
+    width:30,
+    marginRight: 10,
   },
-	toVideo: {
-		fontSize: 36,
+  btnimage: {
+    height:30,
+    width:30,
+    alignSelf: 'stretch'
+  },
+	city: {
+		fontSize: 40,
     color: 'white',
-    // marginTop: 50
-    // position: 'absolute',
-    // bottom: 80,
-    // right: 150
+    marginTop: 50
 	},
-  toVideo1: {
-    fontSize: 24,
+  weather: {
+    fontSize: 30,
     color: 'white',
-    marginTop: 50
-    // position: 'absolute',
-    // bottom: 80,
-    // right: 105
+    marginTop: 40
   },
-  toVideo2: {
-    fontSize: 14,
+  temperature: {
+    fontSize: 45,
     color: 'white',
-    marginTop: 50
-    // position: 'absolute',
-    // bottom: 8,
-    // right: 15
+    marginTop: 80
   },
-  toVideo3: {
-    fontSize: 20,
+  drying: {
+    fontSize: 30,
     color: 'white',
-    marginTop: 100
-    // position: 'absolute',
-    // bottom: 100,
-    // right: 135
+    marginTop: 80
+  },
+  wind: {
+    fontSize: 30,
+    color: 'white',
+    marginTop: 40
   }
 })
 
