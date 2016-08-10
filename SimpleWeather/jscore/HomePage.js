@@ -8,6 +8,8 @@
 import React, { Component } from 'react'
 import { View, ScrollView,Alert, Animated, Image, TouchableHighlight, Text, StyleSheet } from 'react-native'
 import Setting from './Setting'
+import RequestUtils from './util/RequestUtils'
+import Api from './util/Api'
 
 
 class HomePage extends Component {
@@ -22,9 +24,24 @@ class HomePage extends Component {
 
   	// 网络请求
   	try {
+      console.log('start')
+    //   var url = 'http://v.juhe.cn/weather/index?cityname=' + '1' + '&key=b211c7e3ca3d1da2a71af0a2f73bf7a5';
+    //   RequestUtils.get(url, function(data){
+    //   that.setState({
+    //     data: data
+    //   });
+    // }, function(err){
+    //     alert(err);
+    // });
+
+      RequestUtils.getCity('1',function(data){
+        console.log('success')
+      }, function(err){
+        alert(err);
+      });
 
   	} catch(error) {
-
+      console.log(error)
   	}
   }
 
