@@ -16,28 +16,28 @@ class HomePage extends Component {
    constructor (...args) {
     super(...args)
     this.state = ({
-
+    	isLoading: true,
+    	data: null
     })
   }
   // render方法之后执行
-  async componentDidMount () {
+  componentDidMount () {
 
   	// 网络请求
   	try {
-      console.log('start')
-    //   var url = 'http://v.juhe.cn/weather/index?cityname=' + '1' + '&key=b211c7e3ca3d1da2a71af0a2f73bf7a5';
-    //   RequestUtils.get(url, function(data){
-    //   that.setState({
-    //     data: data
-    //   });
-    // }, function(err){
-    //     alert(err);
-    // });
 
+    	var that = this;
       RequestUtils.getCity('1',function(data){
         console.log('success')
+        console.log(data.reason + '+' + data.result.today.city)
+        that.weatherData = data
+        that.setState({
+        	isLoading: false,
+        	data : data
+      	});
       }, function(err){
-        alert(err);
+      	console.log(err)
+        // alert(err);
       });
 
   	} catch(error) {
@@ -48,15 +48,17 @@ class HomePage extends Component {
 
   render () {
   	let content
-  		content = (
+  			content = (
   		<View style={styles.content}>
         <View style={styles.topcontent}>
           <TouchableHighlight style={styles.leftbutton}
             underlayColor={'#333333'}
             onPress={() => {
+            	console.log('onPress'+this.weatherData.reason)
               this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
                 component: Setting,
                 title: '233',
+                passProps: this.weatherData,
               })
             }}>
             <Image source={require('./images/gank_launcher.png')} style={styles.btnimage}/>
@@ -78,19 +80,32 @@ class HomePage extends Component {
           )}>
   			<ScrollView contentContainerStyle={styles.scrollView}
           automaticallyAdjustContentInsets={false}>
-          <Text style={styles.city}>city</Text>
-          <Text style={styles.weather}>weather</Text>
-          <Text style={styles.temperature}>temperature</Text>
-          <Text style={styles.drying}>drying</Text>
-          <Text style={styles.wind}>wind</Text>
+          	{
+          		this.state.data ?
+          		<View style={styles.inView}>
+          		<Text style={styles.city}>{this.state.data.result.today.city}</Text>
+          		<Text style={styles.weather}>{this.state.data.result.today.weather}</Text>
+          		<Text style={styles.temperature}>{this.state.data.result.today.temperature}</Text>
+          		<Text style={styles.drying}>{this.state.data.result.today.dressing_index}</Text>
+         	 		<Text style={styles.wind}>{this.state.data.result.today.wind}</Text>
+         	 		</View>
+         	 		: RequestUtils.midLoading
+          	}
         </ScrollView>
         </TouchableHighlight>
   		</View>)
-  	return (
-  	<View style={styles.content} needsOffscreenAlphaCompositing renderToHardwareTextureAndroid >
-        {content}
-      </View>
-  	)
+
+  		if (this.state.isLoading) {
+  			return (<View style={styles.content}>
+  				{RequestUtils.toploading}
+      		</View>)
+  		} else {
+  			return (
+  				<View style={styles.content}>
+  				{content}
+      		</View>
+  			)
+  		}
   }
 
 }
@@ -111,10 +126,12 @@ var styles = StyleSheet.create({
   scrollView: {
     backgroundColor: '#4682B4',
     flex: 1,
-    // justifyContent: 'space-between',
-    // justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10
+  },
+  inView: {
+  	flex: 1,
+    alignItems: 'center',
   },
   leftbutton: {
     backgroundColor: '#87CEEB',

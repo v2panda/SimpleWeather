@@ -5,6 +5,7 @@ import { View, ScrollView,Alert, Animated, Image, TouchableHighlight, Text, Styl
 class Setting extends Component {
    constructor (...args) {
     super(...args)
+    this.data = this.props.weatherData
     this.state = ({
 
     })
@@ -12,10 +13,10 @@ class Setting extends Component {
 
 
   async componentDidMount () {
-
+    
   	// 网络请求
   	try {
-
+      console.log(this.props.weatherData.reason)
   	} catch(error) {
 
   	}
