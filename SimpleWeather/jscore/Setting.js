@@ -13,12 +13,13 @@ class Setting extends Component {
 
 
   async componentDidMount () {
-    
+    var that = this;
+    console.log(that.props.weatherData)
   	// 网络请求
   	try {
       console.log(this.props.weatherData.reason)
   	} catch(error) {
-
+      console.log('Setting error')
   	}
   }
 
