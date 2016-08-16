@@ -9,81 +9,84 @@ import React, { Component } from 'react'
 import { View, ScrollView,Alert, RefreshControl, Image, TouchableOpacity, Text, StyleSheet } from 'react-native'
 import Setting from './Setting'
 import RequestUtils from './util/RequestUtils'
-import Api from './util/Api'
+import Storage from './util/Storage'
 
 
 class HomePage extends Component {
    constructor (...args) {
     super(...args)
+    this.dateArray = ['#4682B4','#434243','#E03333','#22B573']
     this.state = ({
-    	isLoading: true,
-    	isRefreshing: false,
-    	isSevenDay: false,
-    	isChange: false,
-    	data: null
+      isLoading: true,
+      isRefreshing: false,
+      isSevenDay: false,
+      isChange: false,
+      colorCount: 0,
+      bgColor: this.dateArray[0],
+      data: null
     })
   }
   // render方法之后执行
   componentDidMount () {
-
-  	// 网络请求
-  	try {
-
-    	var that = this;
-      RequestUtils.getCity('1',function(data){
+    console.log('componentDidMount' + this.getColorCount())
+    // 网络请求
+    try {
+      
+      var that = this;
+      RequestUtils.getCity('13',function(data){
         console.log('success')
         console.log(data.reason + '+' + data.result.today.city)
         that.weatherData = data
         var array = [];
-  			for(var key in data.result.future)
-				{
-					let week = data.result.future[key].week;
-					let weather = data.result.future[key].weather;
-					let temperature = data.result.future[key].temperature;
-					let space = '  ';
-					let string = week + space + weather + space + space + temperature;
- 					array.push(string);
-				}
-				console.log(array);
-				that.array = array;
+        for(var key in data.result.future)
+        {
+          let week = data.result.future[key].week;
+          let weather = data.result.future[key].weather;
+          let temperature = data.result.future[key].temperature;
+          let space = '  ';
+          let string = week + space + weather + space + space + temperature;
+          array.push(string);
+        }
+        console.log(array);
+        that.array = array;
         that.setState({
-        	isLoading: false,
-        	data : data
-      	});
+          isLoading: false,
+          data : data
+        });
       }, function(err){
-      	console.log(err)
-        // alert(err);
+        console.log(err)
       });
 
-  	} catch(error) {
+    } catch(error) {
       console.log(error)
-  	}
+    }
   }
 
 
   render () {
-  	let content
-  	var scrollViewStyle = {
-    	backgroundColor: this.state.isChange ? '#4682B4' : '#434243' ,
-    	flex: 1,
-    	alignItems: 'center',
-  		};
-  	var contentStyle = {
-			backgroundColor: this.state.isChange ? '#4682B4' : '#434243' ,
-   	 	flex: 1,
-			};
-  	var topcontentStyle = {
-    	backgroundColor: this.state.isChange ? '#4682B4' : '#434243' ,
-    	marginTop: 50,
-   		alignItems: 'center',
-   	 	justifyContent: 'space-between',
-    	flexDirection: 'row',
-  		};
-  			content = (
-  		<View style={contentStyle}>
+    let content
+    console.log('xixi' + this.dateArray[this.state.colorCount] +'xixi'+ this.state.bgColor);
+    var scrollViewStyle = {
+      backgroundColor: this.dateArray[this.state.colorCount],
+      flex: 1,
+      alignItems: 'center',
+      };
+    var contentStyle = {
+      backgroundColor: this.dateArray[this.state.colorCount],
+      flex: 1,
+      };
+    var topcontentStyle = {
+      backgroundColor: this.dateArray[this.state.colorCount],
+      marginTop: 50,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+      };
+        content = (
+      <View style={contentStyle}>
         <View style={topcontentStyle}>
           <TouchableOpacity style={styles.leftbutton}
-            onPress={() => (this.setState({isChange: !this.state.isChange})) }>
+            onPress={() => (this.changeColor()) }>
             <Image source={require('./images/btn_color.png')} style={styles.btnimage}/>
           </TouchableOpacity>
           <TouchableOpacity style={styles.rightbutton}
@@ -92,8 +95,8 @@ class HomePage extends Component {
           </TouchableOpacity>
         </View>
  
-  			<ScrollView 
-  				contentContainerStyle={scrollViewStyle}
+        <ScrollView 
+          contentContainerStyle={scrollViewStyle}
           automaticallyAdjustContentInsets={false}
           refreshControl={
           <RefreshControl
@@ -102,78 +105,114 @@ class HomePage extends Component {
             tintColor='#F8F8FF'
             title='Loading...'
             progressBackgroundColor='#F8F8FF'/>
-        	}>
-          	{
-          		this.state.data ?
-          		<View style={styles.inView}>
-          			{
-          				this.state.isSevenDay ?
-          				<View style={styles.inView}>
-          				<Text style={styles.city}>{this.state.data.result.today.city}</Text>
-          				<Text style={styles.sevenDay}>{this.array[0]}</Text>
-          				<Text style={styles.sevenDay}>{this.array[1]}</Text>
-          				<Text style={styles.sevenDay}>{this.array[2]}</Text>
-         	 				<Text style={styles.sevenDay}>{this.array[3]}</Text>
-         	 				<Text style={styles.sevenDay}>{this.array[4]}</Text>
-         	 				<Text style={styles.sevenDay}>{this.array[5]}</Text>
-         	 				<Text style={styles.sevenDay}>{this.array[6]}</Text>
-          				</View>
-          			:
-          				<View style={styles.inView}>
-          				<Text style={styles.city}>{this.state.data.result.today.city}</Text>
-          				<Text style={styles.weather}>{this.state.data.result.today.weather}</Text>
-          				<Text style={styles.temperature}>{this.state.data.result.today.temperature}</Text>
-          				<Text style={styles.drying}>{this.state.data.result.today.dressing_index}</Text>
-         	 				<Text style={styles.wind}>{this.state.data.result.today.wind}</Text>
-          				</View>
-          			}
-         	 		</View>
-         	 		: null
-          	}
+          }>
+            {
+              this.state.data ?
+              <View style={styles.inView}>
+                {
+                  this.state.isSevenDay ?
+                  <View style={styles.inView}>
+                  <Text style={styles.city}>{this.state.data.result.today.city}</Text>
+                  <Text style={styles.sevenDay}>{this.array[0]}</Text>
+                  <Text style={styles.sevenDay}>{this.array[1]}</Text>
+                  <Text style={styles.sevenDay}>{this.array[2]}</Text>
+                  <Text style={styles.sevenDay}>{this.array[3]}</Text>
+                  <Text style={styles.sevenDay}>{this.array[4]}</Text>
+                  <Text style={styles.sevenDay}>{this.array[5]}</Text>
+                  <Text style={styles.sevenDay}>{this.array[6]}</Text>
+                  </View>
+                :
+                  <View style={styles.inView}>
+                  <Text style={styles.city}>{this.state.data.result.today.city}</Text>
+                  <Text style={styles.weather}>{this.state.data.result.today.weather}</Text>
+                  <Text style={styles.temperature}>{this.state.data.result.today.temperature}</Text>
+                  <Text style={styles.drying}>{this.state.data.result.today.dressing_index}</Text>
+                  <Text style={styles.wind}>{this.state.data.result.today.wind}</Text>
+                  </View>
+                }
+              </View>
+              : null
+            }
         </ScrollView>
 
-  		</View>)
+      </View>)
 
-  		if (this.state.isLoading) {
-  			return (<View style={styles.content}>
-  				{RequestUtils.toploading}
-      		</View>)
-  		} else {
-  			return (
-  				<View style={styles.content}>
-  				{content}
-      		</View>
-  			)
-  		}
+      if (this.state.isLoading) {
+        return (<View style={styles.content}>
+          {RequestUtils.toploading}
+          </View>)
+      } else {
+        return (
+          <View style={styles.content}>
+          {content}
+          </View>
+        )
+      }
   }
 
   async _refresh () {
-  	if (this.state.isRefreshing) {
+    if (this.state.isRefreshing) {
       return
     }
     this.setState({isRefreshing: true})
 
-  	// 网络请求
-  	try {
-    	var that = this;
-      RequestUtils.getCity('1',function(data){
+    // 网络请求
+    try {
+      var that = this;
+      RequestUtils.getCity('12',function(data){
         console.log('success')
         console.log(data.reason + '+' + data.result.today.city)
         that.setState({
-        	isLoading: false,
-        	data : data,
-        	isRefreshing: false
-      	})
+          isLoading: false,
+          data : data,
+          isRefreshing: false
+        })
       }, function(err){
-      	console.log(err)
+        console.log(err)
       });
 
-  	} catch(error) {
+    } catch(error) {
       console.log(error)
       this.setState({
         isRefreshing: false
       })
-  	}
+    }
+  }
+
+  changeColor () {
+    this.state.colorCount = (this.state.colorCount + 1) % this.dateArray.length;
+    console.log('哈哈' + this.state.colorCount);
+    console.log('hehe' + this.dateArray[this.state.colorCount]);
+
+    this.setState({bgcolor: this.dateArray[this.state.colorCount]});
+    this.saveColorCount(this.state.colorCount);
+    
+  }
+
+  saveColorCount (count) {
+    global.storage.save({
+      key: 'colorCount',
+      rawData: {
+        colorCount: count,
+      },
+      expires: null,
+    })
+  }
+
+  getColorCount () {
+    global.storage.load({
+      key: 'colorCount',
+     }).then(ret => {
+        console.log(ret.colorCount);
+        this.setState({
+          colorCount: ret.colorCount
+        })
+      }).catch(err => {
+        console.warn(err);
+        this.setState({
+          colorCount: 0
+        })
+    })
   }
 
 
@@ -181,10 +220,10 @@ class HomePage extends Component {
 
 
 var styles = StyleSheet.create({
-	content: {
-		backgroundColor: '#434243',
+  content: {
+    backgroundColor: '#434243',
     flex: 1,
-	},
+  },
   topcontent: {
     backgroundColor: '#4682B4',
     marginTop: 50,
@@ -199,7 +238,7 @@ var styles = StyleSheet.create({
     marginTop: 10
   },
   inView: {
-  	flex: 1,
+    flex: 1,
     alignItems: 'center',
   },
   leftbutton: {
@@ -219,11 +258,11 @@ var styles = StyleSheet.create({
     width:30,
     alignSelf: 'stretch'
   },
-	city: {
-		fontSize: 40,
+  city: {
+    fontSize: 40,
     color: 'white',
     marginTop: 50
-	},
+  },
   weather: {
     fontSize: 30,
     color: 'white',
