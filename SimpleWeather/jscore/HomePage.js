@@ -6,8 +6,8 @@
 */ 
 'use strict'
 import React, { Component } from 'react'
-import { View, ScrollView,Alert, RefreshControl, Image, TouchableOpacity, Text, StyleSheet } from 'react-native'
-import Setting from './Setting'
+import { View, ScrollView, Alert, RefreshControl, Image, PickerIOS, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import AboutPage from './AboutPage'
 import RequestUtils from './util/RequestUtils'
 import Storage from './util/Storage'
 
@@ -23,17 +23,29 @@ class HomePage extends Component {
       isChange: false,
       colorCount: 0,
       bgColor: this.dateArray[0],
+      longitude: 'unknown',
+      latitude: 'unknown',
       data: null
     })
   }
   // render方法之后执行
   componentDidMount () {
+  	var that = this;
+
     console.log('componentDidMount' + this.getColorCount())
     // 网络请求
+
+
+    try {
+    	// this.getlocate();
+    }catch(error){
+    	console.log(error)
+    }
+
     try {
       
       var that = this;
-      RequestUtils.getCity('13',function(data){
+      RequestUtils.getCity('14',function(data){
         console.log('success')
         console.log(data.reason + '+' + data.result.today.city)
         that.weatherData = data
@@ -85,13 +97,25 @@ class HomePage extends Component {
         content = (
       <View style={contentStyle}>
         <View style={topcontentStyle}>
-          <TouchableOpacity style={styles.leftbutton}
+        	<TouchableOpacity style={styles.morebutton}
+            onPress={() => {
+            	this.props.navigator.push({
+              component: AboutPage
+           		})
+            } }>
+            <Image source={require('./images/btn_more.png')} style={styles.btnimage}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.colorbutton}
             onPress={() => (this.changeColor()) }>
             <Image source={require('./images/btn_color.png')} style={styles.btnimage}/>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.rightbutton}
+          <TouchableOpacity style={styles.sevenbutton}
             onPress={() => (this.setState({isSevenDay: !this.state.isSevenDay}))}>
             <Image source={require('./images/btn_seven.png')} style={styles.btnimage}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.locationbutton}
+            onPress={() => (this.getlocate())}>
+            <Image source={require('./images/btn_location.png')} style={styles.btnimage}/>
           </TouchableOpacity>
         </View>
  
@@ -148,6 +172,47 @@ class HomePage extends Component {
           </View>
         )
       }
+  }
+
+  getlocate () {
+  	var that = this;
+  	navigator.geolocation.getCurrentPosition(
+      (position) => {
+        var initialPosition = JSON.parse(JSON.stringify(position));//JSON.stringify(position);
+        var longitude = initialPosition.coords.longitude;
+        var latitude = initialPosition.coords.latitude;
+        this.setState({longitude,latitude});
+        console.log('getCurrentPosition' + longitude +'-----' +latitude)
+        RequestUtils.getGeo(this.state.longitude,this.state.latitude,function(data){
+        	console.log('getGeo')
+        	console.log(data.reason + 'getGeo' + data.result.today.city)
+
+        that.weatherData = data
+        var array = [];
+        for(var key in data.result.future)
+        {
+          let week = data.result.future[key].week;
+          let weather = data.result.future[key].weather;
+          let temperature = data.result.future[key].temperature;
+          let space = '  ';
+          let string = week + space + weather + space + space + temperature;
+          array.push(string);
+        }
+        console.log(array);
+        that.array = array;
+        that.setState({
+          isLoading: false,
+          data : data
+        });
+
+      		}, function(err){
+        	console.log(err)
+    	  });
+
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
   }
 
   async _refresh () {
@@ -241,15 +306,23 @@ var styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  leftbutton: {
-    // backgroundColor: '#87CEEB',
+  morebutton: {
     height:30,
     width:30,
     marginLeft: 10,
   },
-  rightbutton: {
-    // backgroundColor: '#87CEEB',
+  colorbutton: {
     height:30,
+    width:30,
+    marginLeft: -100,
+  },
+  sevenbutton: {
+    height:30,
+    width:30,
+    marginRight: -100,
+  },
+  locationbutton: {
+  	height:30,
     width:30,
     marginRight: 10,
   },

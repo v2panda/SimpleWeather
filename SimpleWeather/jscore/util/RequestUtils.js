@@ -24,7 +24,20 @@ const RequestUtils = {
       });
   },
 
+  getGeo: function(lon, lat, successCallback, failCallback){
 
+    let url = 'http://v.juhe.cn/weather/geo?format=2' + '&key=b211c7e3ca3d1da2a71af0a2f73bf7a5' +'&lon=' + lon.toString() + '&lat=' + lat.toString();
+
+    fetch(url)
+      .then((response) => response.text())
+      .then((responseText) => {
+        console.log(responseText);
+        successCallback(JSON.parse(responseText));
+      })
+      .catch(function(err){
+        failCallback(err);
+      });
+  },
 
   /*loading效果*/
   toploading: <ActivityIndicator color="#3E00FF" style={{marginTop:40}}/>,
