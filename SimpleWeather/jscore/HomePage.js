@@ -6,7 +6,7 @@
 */ 
 'use strict'
 import React, { Component } from 'react'
-import { View, ScrollView, Alert, RefreshControl, Image, PickerIOS, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { View, ScrollView, Alert, RefreshControl, Image, TouchableOpacity, Text, StyleSheet } from 'react-native'
 import AboutPage from './AboutPage'
 import RequestUtils from './util/RequestUtils'
 import Storage from './util/Storage'
@@ -15,7 +15,7 @@ import Storage from './util/Storage'
 class HomePage extends Component {
    constructor (...args) {
     super(...args)
-    this.dateArray = ['#4682B4','#434243','#E03333','#22B573']
+    this.dateArray = ['#434243','#4682B4','#E03333','#22B573']
     this.state = ({
       isLoading: true,
       isRefreshing: false,
@@ -30,52 +30,21 @@ class HomePage extends Component {
   }
   // render方法之后执行
   componentDidMount () {
-  	var that = this;
 
-    console.log('componentDidMount' + this.getColorCount())
+  	this.getColorCount();
+
     // 网络请求
-
-
     try {
-    	// this.getlocate();
+    	this.getlocate();
     }catch(error){
     	console.log(error)
     }
 
-    try {
-      
-      var that = this;
-      RequestUtils.getCity('14',function(data){
-        console.log('success')
-        console.log(data.reason + '+' + data.result.today.city)
-        that.weatherData = data
-        var array = [];
-        for(var key in data.result.future)
-        {
-          let week = data.result.future[key].week;
-          let weather = data.result.future[key].weather;
-          let temperature = data.result.future[key].temperature;
-          let space = '  ';
-          let string = week + space + weather + space + space + temperature;
-          array.push(string);
-        }
-        console.log(array);
-        that.array = array;
-        that.setState({
-          isLoading: false,
-          data : data
-        });
-      }, function(err){
-        console.log(err)
-      });
-
-    } catch(error) {
-      console.log(error)
-    }
   }
 
 
   render () {
+
     let content
     console.log('xixi' + this.dateArray[this.state.colorCount] +'xixi'+ this.state.bgColor);
     var scrollViewStyle = {
@@ -93,14 +62,17 @@ class HomePage extends Component {
       alignItems: 'center',
       justifyContent: 'space-between',
       flexDirection: 'row',
-      };
+     };
+
+      let color = this.dateArray[this.state.colorCount];
         content = (
       <View style={contentStyle}>
         <View style={topcontentStyle}>
         	<TouchableOpacity style={styles.morebutton}
             onPress={() => {
             	this.props.navigator.push({
-              component: AboutPage
+              component: AboutPage,
+              passProps: {color}
            		})
             } }>
             <Image source={require('./images/btn_more.png')} style={styles.btnimage}/>
@@ -172,22 +144,20 @@ class HomePage extends Component {
           </View>
         )
       }
+
   }
 
   getlocate () {
   	var that = this;
   	navigator.geolocation.getCurrentPosition(
       (position) => {
-        var initialPosition = JSON.parse(JSON.stringify(position));//JSON.stringify(position);
+        var initialPosition = JSON.parse(JSON.stringify(position));
         var longitude = initialPosition.coords.longitude;
         var latitude = initialPosition.coords.latitude;
         this.setState({longitude,latitude});
         console.log('getCurrentPosition' + longitude +'-----' +latitude)
         RequestUtils.getGeo(this.state.longitude,this.state.latitude,function(data){
-        	console.log('getGeo')
         	console.log(data.reason + 'getGeo' + data.result.today.city)
-
-        that.weatherData = data
         var array = [];
         for(var key in data.result.future)
         {
@@ -224,17 +194,30 @@ class HomePage extends Component {
     // 网络请求
     try {
       var that = this;
-      RequestUtils.getCity('12',function(data){
-        console.log('success')
-        console.log(data.reason + '+' + data.result.today.city)
+
+      RequestUtils.getGeo(this.state.longitude,this.state.latitude,function(data){
+        	console.log(data.reason + 'getGeo' + data.result.today.city)
+        var array = [];
+        for(var key in data.result.future)
+        {
+          let week = data.result.future[key].week;
+          let weather = data.result.future[key].weather;
+          let temperature = data.result.future[key].temperature;
+          let space = '  ';
+          let string = week + space + weather + space + space + temperature;
+          array.push(string);
+        }
+        console.log(array);
+        that.array = array;
         that.setState({
           isLoading: false,
           data : data,
           isRefreshing: false
-        })
-      }, function(err){
-        console.log(err)
-      });
+        });
+
+      		}, function(err){
+        	console.log(err)
+    	  });
 
     } catch(error) {
       console.log(error)
@@ -268,12 +251,11 @@ class HomePage extends Component {
     global.storage.load({
       key: 'colorCount',
      }).then(ret => {
-        console.log(ret.colorCount);
         this.setState({
           colorCount: ret.colorCount
         })
       }).catch(err => {
-        console.warn(err);
+        console.log(err);
         this.setState({
           colorCount: 0
         })
@@ -288,19 +270,6 @@ var styles = StyleSheet.create({
   content: {
     backgroundColor: '#434243',
     flex: 1,
-  },
-  topcontent: {
-    backgroundColor: '#4682B4',
-    marginTop: 50,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-  scrollView: {
-    backgroundColor: '#4682B4',
-    flex: 1,
-    alignItems: 'center',
-    marginTop: 10
   },
   inView: {
     flex: 1,
