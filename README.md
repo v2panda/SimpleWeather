@@ -7,9 +7,8 @@ This is a SimpleWeather App written with react-native.
 <br/>
 
 ##ScreenShoot
-![ScreenShoot](https://github.com/v2panda/SimpleWeather/images/IMG_0605.PNG)
-![ScreenShoot](https://github.com/v2panda/SimpleWeather/images/IMG_0606.PNG)
-![ScreenShoot](https://github.com/v2panda/SimpleWeather/images/IMG_0607.PNG)
+
+![ScreenShoot](https://github.com/v2panda/SimpleWeather/raw/master/images/screenShoot.png)
 
 
 ##How to build
