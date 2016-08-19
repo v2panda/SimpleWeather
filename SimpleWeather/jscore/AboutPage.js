@@ -22,7 +22,7 @@ class AboutPage extends Component {
     return (
       <View style={{flex:1,backgroundColor:this.color}}>
         <ScrollView>
-          <Image source={require('./images/gank_launcher.png')} style={styles.imgLauncher}/>
+          <Image source={require('./images/icon.png')} style={styles.imgLauncher}/>
           <Text style={styles.versionText}>至简天气</Text>
           <Text style={styles.versionText}>v2.0.0</Text>
           <Text style={styles.aboutText}>关于开发者</Text>
