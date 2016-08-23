@@ -2,8 +2,8 @@
 
 This is a SimpleWeather App written with react-native.
 
-[![License MIT](https://img.shields.io/badge/license-GPL-green.svg)](https://github.com/v2panda/SimpleNote)
-[![](https://img.shields.io/badge/done-50%-green.svg?style=flat)](https://github.com/v2panda/SimpleNote)
+[![License MIT](https://img.shields.io/badge/license-GPL-green.svg)](https://github.com/v2panda/SimpleWeather)
+[![](https://img.shields.io/badge/done-50%-green.svg?style=flat)](https://github.com/v2panda/SimpleWeather)
 <br/>
 
 ##ScreenShoot
@@ -27,7 +27,7 @@ npm install
 3) Open in Xcode or 
 
 ```
-$ react-native run ios
+$ react-native run-ios
 ```
 
 3) Compile and run the app in your simulator or iOS device
